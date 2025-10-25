@@ -30,14 +30,14 @@ public class RacingGameSimulator {
     }
 
     private List<String> extractWinnerNameList() {
-        int maxFowardCount = extractMaxFowardCount();
+        int maxForwardCount = extractMaxForwardCount();
         return racingCarList.stream()
-                .filter(racingCar -> racingCar.getForwardCount() == maxFowardCount)
+                .filter(racingCar -> racingCar.getForwardCount() == maxForwardCount)
                 .map(racingCar -> racingCar.getName())
                 .toList();
     }
 
-    private int extractMaxFowardCount() {
+    private int extractMaxForwardCount() {
         return racingCarList.stream()
                 .map(racingCar -> racingCar.getForwardCount())
                 .max(Integer::compareTo)
