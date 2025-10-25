@@ -52,4 +52,70 @@ public class RacingGameParserTest {
             assertThat(names).containsExactly("car1", "car2", "car3");
         }
     }
+
+    @Nested
+    @DisplayName("parseTryCount()")
+    class ParseTryCount {
+
+        @Test
+        @DisplayName("양수인 정수 입력 시 int 값으로 반환하여 성공한다.")
+        void 양수정수_성공() {
+            // given
+            String tryCountInput = "10";
+
+            // when
+            int tryCount = RacingGameParser.parseTryCount(tryCountInput);
+
+            // then
+            assertThat(tryCount).isEqualTo(10);
+        }
+
+        @Test
+        @DisplayName("공백 입력 시 실패한다.")
+        void 공백_실패() {
+            // given
+            String tryCount = "   ";
+
+            // when & then
+            assertThatThrownBy(() -> RacingGameParser.parseTryCount(tryCount))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("시도 횟수를 다시 입력해주세요.");
+        }
+
+        @Test
+        @DisplayName("0을 입력한 경우 실패한다.")
+        void 입력_0_실패() {
+            // given
+            String tryCount = "0";
+
+            // when & then
+            assertThatThrownBy(() -> RacingGameParser.parseTryCount(tryCount))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("시도 횟수는 양수인 정수만 입력될 수 있습니다.");
+        }
+
+        @Test
+        @DisplayName("음수를 입력한 경우 실패한다.")
+        void 입력_음수_실패() {
+            // given
+            String tryCount = "-10";
+
+            // when & then
+            assertThatThrownBy(() -> RacingGameParser.parseTryCount(tryCount))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("시도 횟수는 양수인 정수만 입력될 수 있습니다.");
+        }
+
+        @Test
+        @DisplayName("숫자가 아닌 값 입력 시 예외를 던진다.")
+        void 입력_문자_실패() {
+            // given
+            String tryCount = "abc";
+
+            // when & then
+            assertThatThrownBy(() -> RacingGameParser.parseTryCount(tryCount))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("시도 횟수는 양수인 정수만 입력될 수 있습니다.");
+        }
+    }
 }
