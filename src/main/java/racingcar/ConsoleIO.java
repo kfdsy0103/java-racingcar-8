@@ -16,6 +16,7 @@ public class ConsoleIO {
     }
 
     public static void printRacingStartMessage() {
+        System.out.println();
         System.out.println("실행 결과");
     }
 
