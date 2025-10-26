@@ -7,11 +7,9 @@ public class RacingGameValidator {
     public static void validateRacingCarName(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("자동차 이름을 다시 입력해주세요.");
-        }
-        else if (input.length() > 5) {
+        } else if (input.length() > 5) {
             throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
-        }
-        else if (input.contains(",")) {
+        } else if (input.contains(",")) {
             throw new IllegalArgumentException("자동차 이름에 구분자(,)는 들어갈 수 없습니다.");
         }
     }
