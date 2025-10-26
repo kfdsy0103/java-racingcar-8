@@ -1,29 +1,30 @@
 package racingcar;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
 
 public class RacingGameSimulator {
 
     private List<RacingCar> racingCarList;
     private int tryCount;
+    private NumberStrategy numberStrategy;
 
-    public RacingGameSimulator(List<RacingCar> racingCarList, int tryCount) {
+    public RacingGameSimulator(List<RacingCar> racingCarList, int tryCount, NumberStrategy numberStrategy) {
         this.racingCarList = racingCarList;
         this.tryCount = tryCount;
+        this.numberStrategy = numberStrategy;
     }
 
     public void simulate() {
         ConsoleIO.printRacingStartMessage();
-        for(int currentCount = 0; currentCount < tryCount; currentCount++) {
-            racingCarList.forEach(racingCar -> pickNumberAndMove(racingCar));
+        for (int currentCount = 0; currentCount < tryCount; currentCount++) {
+            racingCarList.forEach(this::pickNumberAndMove);
             ConsoleIO.printRacingStatus(racingCarList);
         }
         ConsoleIO.printRacingWinnerNames(extractWinnerNameList());
     }
 
     private void pickNumberAndMove(RacingCar racingCar) {
-        int number = Randoms.pickNumberInRange(0, 9);
+        int number = numberStrategy.pickNumber();
         if (number >= 4) {
             racingCar.moveForward();
         }
@@ -33,13 +34,13 @@ public class RacingGameSimulator {
         int maxForwardCount = extractMaxForwardCount();
         return racingCarList.stream()
                 .filter(racingCar -> racingCar.getForwardCount() == maxForwardCount)
-                .map(racingCar -> racingCar.getName())
+                .map(RacingCar::getName)
                 .toList();
     }
 
     private int extractMaxForwardCount() {
         return racingCarList.stream()
-                .map(racingCar -> racingCar.getForwardCount())
+                .map(RacingCar::getForwardCount)
                 .max(Integer::compareTo)
                 .orElse(0);
     }

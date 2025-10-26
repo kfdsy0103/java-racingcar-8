@@ -17,7 +17,7 @@ public class RacingGame {
         int tryCount = RacingGameParser.parseTryCount(tryCountInput);
 
         // 3. 게임 진행
-        RacingGameSimulator simulator = new RacingGameSimulator(racingCarList, tryCount);
+        RacingGameSimulator simulator = new RacingGameSimulator(racingCarList, tryCount, new RandomNumber());
         simulator.simulate();
     }
 }
